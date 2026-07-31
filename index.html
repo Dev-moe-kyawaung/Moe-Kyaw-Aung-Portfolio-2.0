@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moe Kyaw Aung - Senior Android Developer Portfolio">
+    <meta name="keywords" content="Moe Kyaw Aung, Android Developer, Senior Developer, Kotlin, Jetpack Compose">
+    <meta name="author" content="Moe Kyaw Aung">
+    <meta name="theme-color" content="#00f3ff">
+    
+    <title>Moe Kyaw Aung | Senior Android Developer - Cyberpunk Portfolio V2</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #bc13fe;
+            --neon-blue: #0066ff;
+            --dark-bg: #0a0a0f;
+            --darker-bg: #050508;
+            --card-bg: rgba(10, 10, 15, 0.85);
+            --glass-bg: rgba(0, 243, 255, 0.05);
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --error: #ff3366;
+            --success: #00ff88;
+            --font-primary: 'Rajdhani', sans-serif;
+            --font-display: 'Orbitron', sans-serif;
+            --font-code: 'Share Tech Mono', monospace;
+            --neon-glow-cyan: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.5), 0 0 30px rgba(0, 243, 255, 0.3);
+            --neon-glow-pink: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3);
+            --hologram-glow: 0 0 20px rgba(0, 243, 255, 0.4), inset 0 0 20px rgba(0, 243, 255, 0.1);
+            --grid-size: 50px;
+            --grid-color: rgba(0, 243, 255, 0.1);
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--font-primary);
+            background: var(--dark-bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        #codeRain {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--darker-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-pink); }
+        
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--darker-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        .loader-content { text-align: center; }
+        .cyber-spinner {
+            width: 100px; height: 100px;
+            position: relative;
+            animation: spin 2s linear infinite;
+        }
+        .cyber-spinner::before,
+        .cyber-spinner::after {
+            content: '';
+            position: absolute;
+            border: 3px solid transparent;
+            border-radius: 50%;
+        }
+        .cyber-spinner::before {
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-top-color: var(--neon-cyan);
+            border-right-color: var(--neon-pink);
+            animation: spin 2s linear infinite;
+        }
+        .cyber-spinner::after {
+            top: 20%; left: 20%;
+            width: 60%; height: 60%;
+            border-bottom-color: var(--neon-purple);
+            border-left-color: var(--neon-blue);
+            animation: spin 1.5s linear infinite reverse;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            color: var(--neon-cyan);
+            text-shadow: var(--neon-glow-cyan);
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .navbar {
+            background: rgba(10, 10, 15, 0.95) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all var(--transition-medium);
+        }
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+        }
+        .navbar-brand {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--neon-cyan) !important;
+            text-shadow: var(--neon-glow-cyan);
+        }
+        .navbar-nav .nav-link {
+            font-family: var(--font-display);
+            color: #ffffff !important;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem !important;
+            position: relative;
+            transition: all var(--transition-fast);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            transition: all var(--transition-fast);
+            transform: translateX(-50%);
+        }
+        .navbar-nav .nav-link:hover::before,
+        .navbar-nav .nav-link.active::before { width: 100%; }
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--neon-cyan) !important;
+            text-shadow: var(--neon-glow-cyan);
+        }
+        .navbar-toggler {
+            border: 2px solid var(--neon-cyan);
+            padding: 0.5rem 1rem;
+        }
+        .navbar-toggler:hover {
+            background: var(--neon-cyan);
+            box-shadow: var(--neon-glow-cyan);
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 243, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 0 60px;
+            overflow: hidden;
+        }
+        .hero-particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glowShift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+        }
+        @keyframes glowShift { 0%, 100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(30deg); } }
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            color: var(--neon-cyan);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: glitch 2s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--silver);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cyber-btn {
+            position: relative;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            transition: left 0.5s ease;
+        }
+        .cyber-btn:hover::before { left: 100%; }
+        .cyber-btn-primary {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+            box-shadow: var(--neon-glow-cyan);
+        }
+        .cyber-btn-primary:hover {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: var(--neon-glow-pink);
+            color: #ffffff;
+        }
+        .cyber-btn-secondary {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+        }
+        .cyber-btn-secondary:hover {
+            background: var(--neon-pink);
+            color: #ffffff;
+            box-shadow: var(--neon-glow-pink);
+        }
+        .parallax-element {
+            position: absolute;
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+        }
+        .floating-cube {
+            width: 60px; height: 60px;
+            border: 2px solid var(--neon-cyan);
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            box-shadow: var(--neon-glow-cyan);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="cyber-spinner"></div>
+            <div class="loader-text">INITIALIZING SYSTEM...</div>
+        </div>
+    </div>
+    
+    <canvas id="codeRain"></canvas>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fab fa-android me-2"></i>
+                Moe Kyaw Aung
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about-skills.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about-skills.html#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="projects-services.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="projects-services.html#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="experience-contact.html">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="experience-contact.html#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="experience-contact.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="hero">
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">MOE KYAW AUNG</h1>
+            <p class="hero-subtitle">Senior Android Developer</p>
+            <p class="hero-description">
+                Building world-class mobile and web applications with 12+ years of experience. 
+                Expert in Android development, AI integration, cloud architecture, and modern development 
+                practices that deliver exceptional user experiences.
+            </p>
+            <div class="hero-buttons">
+                <a href="projects-services.html" class="cyber-btn cyber-btn-primary">
+                    <i class="fas fa-rocket me-2"></i>View Projects
+                </a>
+                <a href="experience-contact.html#contact" class="cyber-btn cyber-btn-secondary">
+                    <i class="fas fa-envelope me-2"></i>Contact Me
+                </a>
+                <a href="https://github.com/Dev-moe-kyawaung/" target="_blank" class="cyber-btn">
+                    <i class="fab fa-github me-2"></i>GitHub
+                </a>
+            </div>
+        </div>
+        
+        <div class="floating-cube parallax-element" style="top: 20%; left: 10%;" data-speed="2"></div>
+        <div class="floating-cube parallax-element" style="top: 60%; right: 15%;" data-speed="-2"></div>
+        <div class="floating-cube parallax-element" style="top: 40%; left: 80%;" data-speed="3"></div>
+    </section>
+    
+    <
+    <title>About & Skills - Moe Kyaw Aung Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Include all CSS from Part 1 here */
+        /* (Same CSS variables and base styles) */
+        
+        #stats {
+            padding: 60px 0;
+            background: var(--card-bg);
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 15px;
+            transition: all var(--transition-medium);
+        }
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-cyan);
+            box-shadow: var(--neon-glow-cyan);
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: var(--neon-glow-cyan);
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--silver);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        #about { padding: 100px 0; }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--neon-cyan);
+            text-shadow: var(--neon-glow-cyan);
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--silver);
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--neon-cyan);
+            box-shadow: var(--neon-glow-cyan);
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform var(--transition-slow);
+        }
+        .about-image:hover img { transform: scale(1.05); }
+        .about-text h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--neon-pink);
+            margin-bottom: 1.5rem;
+        }
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--silver);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        #skills {
+            padding: 100px 0;
+            background: var(--card-bg);
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .skill-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .skill-card:hover::before { left: 100%; }
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-cyan);
+            box-shadow: var(--neon-glow-cyan);
+        }
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+        }
+        .skill-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+        .skill-description {
+            color: var(--silver);
+            line-height: 1.6;
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .skill-tag {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: var(--font-code);
+        }
+        
+        @media (max-width: 992px) {
+            .about-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include navbar from Part 1 -->
+    
+    <section id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item fade-in">
+                    <div class="stat-number" data-count="12">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item fade-in">
+                    <div class="stat-number" data-count="3000">0</div>
+                    <div class="stat-label">Apps Delivered</div>
+                </div>
+                <div class="stat-item fade-in">
+                    <div class="stat-number" data-count="122">0</div>
+                    <div class="stat-label">Repositories</div>
+                </div>
+                <div class="stat-item fade-in">
+                    <div class="stat-number" data-count="5000000">0</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">Professional Background</p>
+            <div class="about-content">
+                <div class="about-image fade-in">
+                    <img src="https://gravatar.com/avatar/default?size=400" alt="Moe Kyaw Aung">
+                </div>
+                <div class="about-text fade-in">
+                    <h3>Expert developer with deep knowledge in building scalable, high-performance applications</h3>
+                    <p>
+                        I'm a Senior Android Developer with nearly two years of experience in building Android 
+                        applications and working within the Android ecosystem. I specialize in creating scalable, 
+                        production-grade Android applications with Clean Architecture, Firebase, and modern 
+                        development practices.
+                    </p>
+                    <p>
+                        Based in Myanmar, I work with clients globally to deliver exceptional mobile experiences. 
+                        My expertise spans across Android development, AI integration, cloud architecture, and 
+                        modern development practices that prioritize user experience and performance.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://github.com/Dev-moe-kyawaung/" target="_blank" class="cyber-btn">
+                            <i class="fab fa-github me-2"></i>GitHub
+                        </a>
+                        <a href="https://gravatar.com/moekyawaung2026" target="_blank" class="cyber-btn">
+                            <i class="fas fa-user me-2"></i>Gravatar 1
+                        </a>
+                        <a href="https://gravatar.com/moekyawaung13721" target="_blank" class="cyber-btn">
+                            <i class="fas fa-user-circle me-2"></i>Gravatar 2
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <p class="section-subtitle">Expertise & Technologies</p>
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fab fa-android"></i></div>
+                    <h3 class="skill-title">Mobile Development</h3>
+                    <p class="skill-description">
+                        Specialized in Android development with Kotlin, Java, Jetpack Compose, and modern 
+                        architecture patterns including MVVM, Clean Architecture, MVI, and modular design.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Kotlin</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Jetpack Compose</span>
+                        <span class="skill-tag">MVVM</span>
+                        <span class="skill-tag">Clean Architecture</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                    <h3 class="skill-title">AI & Machine Learning</h3>
+                    <p class="skill-description">
+                        Deep expertise in integrating artificial intelligence, machine learning models, 
+                        neural networks, NLP, and computer vision into mobile and web applications.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">ML Kit</span>
+                        <span class="skill-tag">NLP</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                    <h3 class="skill-title">Cloud Architecture</h3>
+                    <p class="skill-description">
+                        Designing enterprise-grade, scalable cloud solutions on AWS, GCP, Azure, 
+                        serverless architecture, microservices, and container orchestration.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="skill-title">Security & Compliance</h3>
+                    <p class="skill-description">
+                        Implementing enterprise-grade security with encryption, OAuth 2.0, JWT, 
+                        biometric authentication, and building GDPR, HIPAA compliant applications.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">OAuth 2.0</span>
+                        <span class="skill-tag">JWT</span>
+                        <span class="skill-tag">Encryption</span>
+                        <span class="skill-tag">GDPR</span>
+                        <span class="skill-tag">HIPAA</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3 class="skill-title">Full-Stack Development</h3>
+                    <p class="skill-description">
+                        Proficient in React, Vue.js, Node.js, Python, Django, FastAPI, database design, 
+                        GraphQL, REST APIs, and building complete solutions from architecture to deployment.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="skill-title">Performance Optimization</h3>
+                    <p class="skill-description">
+                        Expert in performance optimization, memory management, and creating seamless 
+                        user experiences with 99.9% uptime and exceptional app ratings.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Performance</span>
+                        <span class="skill-tag">Memory Management</span>
+                        <span class="skill-tag">Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Continue in projects-services.html -->
+    id="contactForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="cyber-btn cyber-btn-primary w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Continue in footer-scripts.html -->
+</body>
+</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Include JavaScript for animations and counter
+
+   <title>Footer - Moe Kyaw Aung Portfolio</title>
+    <!-- Include all CSS -->
+    <style>
+        /* Include all previous CSS */
+        
+        footer {
+            background: var(--darker-bg);
+            border-top: 2px solid var(--neon-cyan);
+            padding: 60px 0 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-section h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+        }
+        
+        .ai-assistant {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 70px; height: 70px;
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--neon-glow-cyan);
+            animation: aiPulse 2s ease-in-out infinite;
+        }
+        @keyframes aiPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 243, 255, 0.6); }
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px; left: 30px;
+            width: 50px; height: 50px;
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-pink);
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include all sections from Parts 1-4 -->
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Moe Kyaw Aung - Senior Android Developer with 12+ years of experience.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="about-skills.html">About</a></p>
+                    <p><a href="projects-services.html">Projects</a></p>
+                    <p><a href="experience-contact.html">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <p><a href="https://github.com/Dev-moe-kyawaung/" target="_blank">GitHub</a></p>
+                    <p><a href="https://gravatar.com/moekyawaung2026" target="_blank">Gravatar</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Moe Kyaw Aung. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="ai-assistant" id="aiAssistant">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Include ALL JavaScript from the original complete file
+        // (Preloader, Navbar scroll, Counter animation, Intersection Observer,
+        //  Parallax, Magnetic hover, Back to top, Contact form, AI Assistant,
+        //  Code Rain, Hero particles, etc.)
+    </script>   
+    </script>
+</body>
+</html>
+ -->
